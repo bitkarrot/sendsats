@@ -21,7 +21,8 @@ content = [
     " Example Use: <h1>  https://sendsats.to/me@mydomain.com </h1> ", 
     " will return a scannable Lightning QR Code for any valid Lightning Address. <br><br> ",
     " An API for getting QR codes and Bolt11 Invoices from Lightning Addresses. ", 
-    " Share anywhere; as a link for tips on a twitter profile, or via messenger apps."]
+    " Share anywhere; as a link for tips on a twitter profile, or via messenger apps.", 
+    " Source at <b> <a href=\"https://github.com/bitkarrot/sendsats\"> https://github.com/bitkarrot/sendsats </a> </b>"]
 
 description = ''.join(content)
 title = "sendsats.to"
