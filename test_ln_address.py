@@ -13,11 +13,11 @@ logger = logging.getLogger(__name__)
 
 
 async def main():
-    email = 'bitkarrot@bitcoin.org.hk'
+    email = 'fiatjaf@lntxbot.com'
     amount = 150 # amount in sats
     
-    email = 'foo@example.com' # non working ln address
-    amount = None 
+    #email = 'foo@example.com' # non working ln address
+    #amount = None 
     
     # Get environment variables
     invoice_key = os.getenv('INVOICE_KEY')
@@ -27,6 +27,8 @@ async def main():
     config = { 'invoice_key': invoice_key, 
                 'admin_key': admin_key, 
                 'base_url': base_url }
+
+    print(config)
 
     try:
         async with ClientSession() as session:
@@ -51,11 +53,12 @@ async def main():
                 logging.info(output)
 
             # pay invoice 
-            result = await lnaddy.pay_invoice(bolt11)
-            logging.info("pay invoice result:")
-            logging.info(result)
+            #result = await lnaddy.pay_invoice(bolt11)
+            #logging.info("pay invoice result:")
+            #logging.info(result)
 
             # check payment hash status -
+            """
             payment_hash = result['payment_hash']
             output = await lnaddy.check_invoice(payment_hash)
             if 'paid' in output:
@@ -67,7 +70,8 @@ async def main():
                 logging.info(img_status)
             else: 
                 logging.info(output)
-
+            """
+    
     except Exception as e:
         logging.error(e)
 

@@ -77,7 +77,10 @@ class LNAddress:
         try: 
             purl = self.get_payurl(email)
             json_content = await get_url(session=self._session, path=purl, headers=self.headers())
+            #print("url: " + purl)
+
             datablock = json.loads(json_content)
+            #print(datablock)
 
             lnurlpay = datablock["callback"]
             min_amount = datablock["minSendable"]
@@ -93,16 +96,23 @@ class LNAddress:
             # TODO: check if URL is legit, else return error
             # get bech32-serialized lightning invoice
             ln_res =  await get_url(session=self._session, path=payquery, headers=self.headers())
-            pr_dict = json.loads(ln_res)
+            print("type of ln_res:")
+            print(type(ln_res))
 
-            # check keys returned for status
-            if 'status' in pr_dict: 
+            pr_dict = json.loads(ln_res)
+            print("\n\npr_dict")
+            print(pr_dict)
+
+            if 'pr' in pr_dict: 
+                bolt11 = pr_dict['pr']
+                # capitalize bolt11 
+                ubolt11 = bolt11.upper()
+                return ubolt11
+
+            elif 'reason' in pr_dict: 
                 reason = pr_dict['reason']
                 return reason
-            elif 'pr' in pr_dict: 
-                bolt11 = pr_dict['pr']
-                return bolt11
-            
+ 
         except Exception as e: 
             logging.error("in get bolt11 : "  + str(e))
             return {'status': 'error', 'msg': 'Cannot make a Bolt11, are you sure the address is valid?'}
