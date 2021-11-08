@@ -131,16 +131,14 @@ class LNAddress:
         check payment hash from decoded BOLT11 - works
         """
         try:
+            logging.info("LNAddress.check_invoice()")
             payhashurl = self.base_url + "/" + str(payhash)
             res =  await get_url(session=self._session, path=payhashurl, headers=self.invoice_headers())
             output = json.loads(res)
-            # logging.info("check invoice response: " + output)
-            pay_status = output['paid']
-            pay_preimage = output['preimage']
-            return pay_status, pay_preimage
+            return output
         except Exception as e:
             logging.error('Exception in get_paystatus() ', str(e))
-            return e
+            return str(e)
 
 
     async def pay_invoice(self, bolt11): 
@@ -151,6 +149,7 @@ class LNAddress:
         {'message': '{"error":"self-payments not allowed","code":2,"message":"self-payments not allowed","details":[]}'}        
         """
         try:
+            logging.info("LNAddress.pay_invoice()")
             data = {"out": True, "bolt11": bolt11}
             body = json.dumps(data)
             logging.info(f"body: {body}")
