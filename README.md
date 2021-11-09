@@ -17,11 +17,20 @@ will return a scannable Lightning QR Code for any valid Lightning Address.
 
 ---
 
-Deploy your own copy on Vercel
+## Deploy your own copy on Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbitkarrot%2Fsendsats) 
 
 
 **Live Demo:** <a href="https://sendsats.to">https://sendsats.to</a>
 
+
+This is a work in progress
+
+## TODO:
+
+- QR codes with text indicators
+- pytest
+- pydantic
+- docs
 
