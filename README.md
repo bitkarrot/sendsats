@@ -2,7 +2,7 @@
 
 An API for getting QR codes and Bolt11 Invoices from Lightning Addresses. Share anywhere; as a link for tips on a twitter profile, or via messenger apps.
 
-Uses LNBits as a backend.
+Uses LNBits-legend as a backend.
 
 This is a Work in Progress!
 
