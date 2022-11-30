@@ -8,8 +8,20 @@ This is a Work in Progress!
 
 Example Use:
 
+replace me@mydomain.com with your lightning address
+
 - https://sendsats.to/me@mydomain.com
 will return a scannable Lightning QR Code for any valid Lightning Address.
+currently it defaults to 10 sats, and is in PNG format
+
+- https://sendsats.to/tip/me@mydomain.com/amt/1000
+will return a scannable Lightning QRCode for 1000 sats in PNG
+
+- https://sendsats.to/svg/me@mydomain.com
+will return a SVG - XML format QR code in json format that can be embedded into other content.
+
+- https://sendsats.to/bolt11/me@mydomain.com
+will return a bolt11 invoice in json format.
 
 ---
 
