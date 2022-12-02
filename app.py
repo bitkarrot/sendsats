@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.responses import RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 from ln_address import LNAddress
@@ -50,6 +51,23 @@ app = FastAPI(
     },
 )
 
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:5000",
+    "https://sendsats.to",
+    "http://sendsats.to"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 async def get_bolt(email, amount):
     """
         get bolt from ln addy email, amount
@@ -83,9 +101,9 @@ async def get_Tip_QR_Code(lightning_address: str, tip_amount: str):
         qr.png(tip_file, scale=3, module_color=[0,0,0,128], background=[0xff, 0xff, 0xff])
         return FileResponse(tip_file)
     except Exception as e:
-        return { 
+        return [{ 
             "msg" : "Not a valid tipping Address. Sorry!"
-        }
+        }]
 
 
 @app.get('/qr/{lightning_address}')
@@ -102,13 +120,13 @@ async def get_QR_Code_From_LN_Address(lightning_address: str):
             qr.png(tip_file, scale=3, module_color=[0,0,0,128], background=[0xff, 0xff, 0xff])
             return FileResponse(tip_file)
         else: 
-            return {
+            return [{
                 "msg" : "Please send a valid Lightning Address"
-            }
+            }]
     except Exception as e: 
-        return { 
+        return [{ 
             "msg" : "Not a valid Lightning Address. Sorry!"
-        }
+        }]
 
 
 
@@ -126,13 +144,13 @@ async def get_qr_via_bolt11(lightning_address: str):
                 "bolt11" : bolt11
             }
         else: 
-            return {
+            return [{
                 "msg" : "Please send give a lightning address"
-            }
+            }]
     except Exception as e:
-        return { 
+        return [{ 
             "msg" : "Not a valid Lightning Address"
-        }
+        }]
 
 
 @app.get("/svg/{lightning_address}")
@@ -150,7 +168,7 @@ async def get_svg_img_from_LN_address(lightning_address):
         qr.svg(stream, scale=3)
 
         return (
-                stream.getvalue(),
+                [stream.getvalue()],
                 200,
                 {
                     "Content-Type": "image/svg+xml",
@@ -161,9 +179,9 @@ async def get_svg_img_from_LN_address(lightning_address):
         )
     except Exception as e: 
         logging.error(e)
-        return { 
+        return [{ 
             "msg" : "Not a valid Lightning Address"
-        }
+        }]
 
 
 @app.get("/{lightning_address}")
@@ -178,9 +196,9 @@ async def forward_to_QR_Endpoint(lightning_address):
     except Exception as e:
         logging.error(e) 
 #        return RedirectResponse("/docs")
-        return { 
+        return [{ 
             "msg" : "Not a valid Lightning Address"
-        }
+        }]
 
 
 @app.get("/")
@@ -196,4 +214,4 @@ async def API_Docs():
 
 # for local testing
 if __name__ == "__main__":
-  uvicorn.run("app:app", host="localhost", port=3000, reload=True)
+  uvicorn.run("app:app", host="localhost", port=5000, reload=True)
