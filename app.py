@@ -130,15 +130,15 @@ async def get_QR_Code_From_LN_Address(lightning_address: str):
 
 
 
-@app.get('/bolt11/{lightning_address}')
-async def get_qr_via_bolt11(lightning_address: str):
+@app.get('/bolt11/{lightning_address}/amt/{amount}')
+async def get_qr_via_bolt11(lightning_address: str, amount: str):
     """
     this end point returns a bolt11 Invoice when given a lightning address as parameter
     example use: /bolt11/user@domain.com 
     """
     try:
         if lightning_address is not None:
-            bolt11 = await get_bolt(lightning_address, None)
+            bolt11 = await get_bolt(lightning_address, int(amount))
             # TODO >>>>> check if bolt11 is valid
             return {
                 "bolt11" : bolt11
@@ -166,9 +166,46 @@ async def get_svg_img_from_LN_address(lightning_address):
         
         stream = BytesIO()
         qr.svg(stream, scale=3)
+        svg_stream = stream.getvalue()
+        #print(svg_stream)
 
         return (
-                [stream.getvalue()],
+                svg_stream,
+                #stream.getvalue(),
+                200,
+                {
+                    "Content-Type": "image/svg+xml",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Pragma": "no-cache",
+                    "Expires": "0",
+                },
+        )
+    except Exception as e: 
+        logging.error(e)
+        return [{ 
+            "msg" : "Not a valid Lightning Address"
+        }]
+
+
+@app.get("/svg/{lightning_address}/amt/{amount}")
+async def get_svg_LN_address_amt(lightning_address: str, amount: str): 
+    """
+    this endpoint returns image in SVG - XML format  as part of json response
+    example use: /svg/user@domain.com/amt/100
+    """
+    try: 
+        logging.info("LN Address", lightning_address, "tip amount: ", amount)
+        bolt11 = await get_bolt(lightning_address, int(amount))
+        qr = pyqrcode.create(bolt11)
+        
+        stream = BytesIO()
+        # TODO: make background color and module color dynamic
+        qr.svg(stream, scale=3, background="white",
+        # module_color="black")
+        module_color="#7D007D" )
+
+        return (
+                stream.getvalue(),
                 200,
                 {
                     "Content-Type": "image/svg+xml",
