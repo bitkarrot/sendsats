@@ -77,7 +77,7 @@ async def get_bolt(email, amount):
         async with ClientSession() as session:
             lnaddy = LNAddress(config, session)
             bolt11 = await lnaddy.get_bolt11(email, amount)
-            logging.info(bolt11)
+            #logging.info(bolt11)
             return bolt11
     except Exception as e: 
         logging.error(e)
@@ -92,8 +92,8 @@ async def get_Tip_QR_Code(lightning_address: str, tip_amount: str):
     """
 
     try:
-        logging.info("LN Address", lightning_address, "tip amount: ", tip_amount)
-        print("LN Address", lightning_address, "tip amount: ", tip_amount)
+        #logging.info("LN Address", lightning_address, "tip amount: ", tip_amount)
+        #print("LN Address", lightning_address, "tip amount: ", tip_amount)
 
         bolt11 = await get_bolt(lightning_address, int(tip_amount))
         qr = pyqrcode.create(bolt11)
@@ -188,26 +188,28 @@ async def get_qr_via_bolt11(lightning_address: str, amount: str):
 
 
 @app.get("/svg/{lightning_address}/amt/{amount}")
-async def get_svg_LN_address_amt(lightning_address: str, amount: str, st: str = None, bg: str = None ): 
+async def get_svg_LN_address_amt(lightning_address: str, amount: str, st: str = None, bg: str = None): 
     """
     this endpoint returns image in SVG - XML format  as part of json response
     example use: /svg/user@domain.com/amt/100
     """
     try: 
-        logging.info("LN Address", lightning_address, "tip amount: ", amount, "bgcolor: ", bg, "stroke: ", st)
+        # logging.info("LN Address", lightning_address, "tip amount: ", amount)
+        # logging.info("bgcolor: ", bg, "stroke: ", st)
+        print("LN Address", lightning_address, "tip amount: ", amount)
+        print("bgcolor: ", bg, "stroke: ", st)
+
         bolt11 = await get_bolt(lightning_address, int(amount))
         qr = pyqrcode.create(bolt11)
         
         stream = BytesIO()
         bgcolor = "white"
         modcolor = "black"
-        #modcolor = "#7D007D"
         if (st is not None):
             modcolor = st
         if (bg is not None):
             bgcolor = bg
         
-        # TODO: make background color and module color dynamic
         qr.svg(stream, scale=3, background=bgcolor, module_color=modcolor)
         
         return (

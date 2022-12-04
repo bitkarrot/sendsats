@@ -96,12 +96,12 @@ class LNAddress:
             # TODO: check if URL is legit, else return error
             # get bech32-serialized lightning invoice
             ln_res =  await get_url(session=self._session, path=payquery, headers=self.headers())
-            print("type of ln_res:")
-            print(type(ln_res))
+            #print("type of ln_res:")
+            #print(type(ln_res))
 
             pr_dict = json.loads(ln_res)
-            print("\n\npr_dict")
-            print(pr_dict)
+            #print("\n\npr_dict")
+            #print(pr_dict)
 
             if 'pr' in pr_dict: 
                 bolt11 = pr_dict['pr']
