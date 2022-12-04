@@ -153,40 +153,6 @@ async def get_qr_via_bolt11(lightning_address: str, amount: str):
         }]
 
 
-# @app.get("/svg/{lightning_address}")
-# async def get_svg_img_from_LN_address(lightning_address): 
-#     """
-#     this endpoint returns image in SVG - XML format  as part of json response
-#     example use: /svg/user@domain.com
-#     """
-#     try: 
-#         logging.info(lightning_address)
-#         bolt11 = await get_bolt(lightning_address, None)
-#         qr = pyqrcode.create(bolt11)
-        
-#         stream = BytesIO()
-#         qr.svg(stream, scale=3)
-#         svg_stream = stream.getvalue()
-#         #print(svg_stream)
-
-#         return (
-#                 svg_stream,
-#                 #stream.getvalue(),
-#                 200,
-#                 {
-#                     "Content-Type": "image/svg+xml",
-#                     "Cache-Control": "no-cache, no-store, must-revalidate",
-#                     "Pragma": "no-cache",
-#                     "Expires": "0",
-#                 },
-#         )
-#     except Exception as e: 
-#         logging.error(e)
-#         return [{ 
-#             "msg" : "Not a valid Lightning Address"
-#         }]
-
-
 @app.get("/svg/{lightning_address}/amt/{amount}")
 async def get_svg_LN_address_amt(lightning_address: str, amount: str, st: str = None, bg: str = None): 
     """
@@ -252,7 +218,6 @@ async def API_Docs():
     Redirects queries from top level domain to API docs (this page)
     """
     return RedirectResponse("/docs")
-
 
 
 # for local testing
