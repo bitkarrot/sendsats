@@ -87,8 +87,9 @@ class LNAddress:
 
             payquery = lnurlpay + "?amount=" + str(min_amount)
             if amount is not None:
-                if int(amount*1000) > int(min_amount):
-                    payquery = lnurlpay + "?amount=" + str(amount*1000)
+                # adjust minimum to 1000 sats. 
+                if int(amount*100000) > int(min_amount):
+                    payquery = lnurlpay + "?amount=" + str(amount*100000)
             
             logging.info("amount: " + str(amount))
             logging.info("payquery: " + str(payquery))
