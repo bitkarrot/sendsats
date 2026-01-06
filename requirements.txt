@@ -1,5 +1,5 @@
 uvicorn==0.13.4
-aiohttp==3.9.4
+aiohttp==3.13.3
 fastapi==0.109.1
 pyqrcode==1.2.1
 aiofiles
