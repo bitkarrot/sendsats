@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <title>Sendsats.to - {{ lnaddress }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .recipient {
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .amount {
+            font-size: 16px;
+            color: #888;
+            text-align: center;
+        }
+        .qr-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qr-container img {
+            width: 200px;
+            height: 200px;
+            display: block;
+            image-rendering: pixelated;
+        }
+        .url {
+            color: #FFD700;
+            text-decoration: underline;
+            font-size: 14px;
+            text-align: center;
+            word-break: break-all;
+        }
+        .copy-btn {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .copy-btn:hover {
+            background: #444;
+        }
+        .copy-btn.copied {
+            background: #4CAF50;
+        }
+        .memo {
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+    <script async src="https://analytics.eu.umami.is/script.js" data-website-id="a1a5c041-cf11-48c0-bdea-39ccd6358f1b"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="url(#gradient)" stroke="#FFD700" stroke-width="1"/>
+                <defs>
+                    <linearGradient id="gradient" x1="3" y1="2" x2="21" y2="22">
+                        <stop offset="0%" stop-color="#FFD700"/>
+                        <stop offset="100%" stop-color="#FF69B4"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="logo-text">SendSats.to</span>
+        </div>
+
+        <div class="recipient">{{ lnaddress }}</div>
+
+        <div class="amount">Send {{ amount }} Sats</div>
+
+        {% if memo %}
+        <div class="memo">"{{ memo }}"</div>
+        {% endif %}
+
+        <div class="qr-container">
+            <img src="{{ qr_png }}" alt="Lightning QR Code">
+        </div>
+
+        <button class="copy-btn" onclick="copyInvoice()">Copy Invoice</button>
+
+        <div class="url">https://sendsats.to/{{ lnaddress }}</div>
+    </div>
+
+    <script>
+        function copyInvoice() {
+            const bolt11 = "{{ bolt11 }}";
+            navigator.clipboard.writeText(bolt11).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy Invoice';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

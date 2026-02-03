@@ -1,0 +1,185 @@
+@use "sass:map";
+@use "../settings" as *;
+
+@if map.get($modules, "content/button") {
+  /**
+   * Button
+   */
+
+  // Reboot based on :
+  // - normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css
+  // - sanitize.css v13.0.0 | CC0 1.0 Universal | github.com/csstools/sanitize.css
+  // ––––––––––––––––––––
+
+  // 1. Change the font styles in all browsers
+  // 2. Remove the margin on controls in Safari
+  // 3. Show the overflow in Edge
+  button {
+    margin: 0; // 2
+    overflow: visible; // 3
+    font-family: inherit; // 1
+    text-transform: none; // 1
+  }
+
+  // Correct the inability to style buttons in iOS and Safari
+  button,
+  [type="submit"],
+  [type="reset"],
+  [type="button"] {
+    -webkit-appearance: button;
+  }
+
+  // Pico
+  // ––––––––––––––––––––
+
+  button,
+  [type="submit"],
+  [type="reset"],
+  [type="button"],
+  [type="file"]::file-selector-button,
+  [role="button"] {
+    #{$✨}background-color: var(#{$✨}primary-background);
+    #{$✨}border-color: var(#{$✨}primary-border);
+    #{$✨}color: var(#{$✨}primary-inverse);
+    #{$✨}box-shadow: var(#{$✨}button-box-shadow, 0 0 0 rgba(0, 0, 0, 0));
+    padding: var(#{$✨}form-element-spacing-vertical) var(#{$✨}form-element-spacing-horizontal);
+    border: var(#{$✨}border-width) solid var(#{$✨}border-color);
+    border-radius: var(#{$✨}border-radius);
+    outline: none;
+    background-color: var(#{$✨}background-color);
+    box-shadow: var(#{$✨}box-shadow);
+    color: var(#{$✨}color);
+    font-weight: var(#{$✨}font-weight);
+    font-size: 1rem;
+    line-height: var(#{$✨}line-height);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+
+    @if $enable-transitions {
+      transition: background-color var(#{$✨}transition), border-color var(#{$✨}transition),
+        color var(#{$✨}transition), box-shadow var(#{$✨}transition);
+    }
+
+    &:is([aria-current], :hover, :active, :focus) {
+      #{$✨}background-color: var(#{$✨}primary-hover-background);
+      #{$✨}border-color: var(#{$✨}primary-hover-border);
+      #{$✨}box-shadow: var(#{$✨}button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0));
+      #{$✨}color: var(#{$✨}primary-inverse);
+    }
+
+    &:focus {
+      #{$✨}box-shadow: var(#{$✨}button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)),
+        0 0 0 var(#{$✨}outline-width) var(#{$✨}primary-focus);
+    }
+  }
+
+  [type="submit"],
+  [type="reset"],
+  [type="button"] {
+    margin-bottom: var(#{$✨}spacing);
+  }
+
+  // .secondary, .contrast & .outline
+  @if $enable-classes {
+    // Secondary
+    :is(button, [type="submit"], [type="button"], [role="button"]).secondary,
+    [type="reset"],
+    [type="file"]::file-selector-button {
+      #{$✨}background-color: var(#{$✨}secondary-background);
+      #{$✨}border-color: var(#{$✨}secondary-border);
+      #{$✨}color: var(#{$✨}secondary-inverse);
+      cursor: pointer;
+
+      &:is([aria-current], :hover, :active, :focus) {
+        #{$✨}background-color: var(#{$✨}secondary-hover-background);
+        #{$✨}border-color: var(#{$✨}secondary-hover-border);
+        #{$✨}color: var(#{$✨}secondary-inverse);
+      }
+
+      &:focus {
+        #{$✨}box-shadow: var(#{$✨}button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)),
+          0 0 0 var(#{$✨}outline-width) var(#{$✨}secondary-focus);
+      }
+    }
+
+    // Contrast
+    :is(button, [type="submit"], [type="button"], [role="button"]).contrast {
+      #{$✨}background-color: var(#{$✨}contrast-background);
+      #{$✨}border-color: var(#{$✨}contrast-border);
+      #{$✨}color: var(#{$✨}contrast-inverse);
+
+      &:is([aria-current], :hover, :active, :focus) {
+        #{$✨}background-color: var(#{$✨}contrast-hover-background);
+        #{$✨}border-color: var(#{$✨}contrast-hover-border);
+        #{$✨}color: var(#{$✨}contrast-inverse);
+      }
+
+      &:focus {
+        #{$✨}box-shadow: var(#{$✨}button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)),
+          0 0 0 var(#{$✨}outline-width) var(#{$✨}contrast-focus);
+      }
+    }
+
+    // Outline (primary)
+    :is(button, [type="submit"], [type="button"], [role="button"]).outline,
+    [type="reset"].outline {
+      #{$✨}background-color: transparent;
+      #{$✨}color: var(#{$✨}primary);
+      #{$✨}border-color: currentColor;
+
+      &:is([aria-current], :hover, :active, :focus) {
+        #{$✨}background-color: transparent;
+        #{$✨}color: var(#{$✨}primary-hover);
+      }
+    }
+
+    // Outline (secondary)
+    :is(button, [type="submit"], [type="button"], [role="button"]).outline.secondary,
+    [type="reset"].outline {
+      #{$✨}color: var(#{$✨}secondary);
+      #{$✨}border-color: currentColor;
+
+      &:is([aria-current], :hover, :active, :focus) {
+        #{$✨}color: var(#{$✨}secondary-hover);
+      }
+    }
+
+    // Outline (contrast)
+    :is(button, [type="submit"], [type="button"], [role="button"]).outline.contrast {
+      #{$✨}color: var(#{$✨}contrast);
+
+      &:is([aria-current], :hover, :active, :focus) {
+        #{$✨}color: var(#{$✨}contrast-hover);
+      }
+    }
+  } @else {
+    // Secondary button without .class
+    [type="reset"],
+    [type="file"]::file-selector-button {
+      #{$✨}background-color: var(#{$✨}secondary);
+      #{$✨}border-color: var(#{$✨}secondary);
+      #{$✨}color: var(#{$✨}secondary-inverse);
+      cursor: pointer;
+
+      &:is([aria-current], :hover, :active, :focus) {
+        #{$✨}background-color: var(#{$✨}secondary-hover);
+        #{$✨}border-color: var(#{$✨}secondary-hover);
+      }
+
+      &:focus {
+        #{$✨}box-shadow: var(#{$✨}button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)),
+          0 0 0 var(#{$✨}outline-width) var(#{$✨}secondary-focus);
+      }
+    }
+  }
+
+  // Button [disabled]
+  :where(button, [type="submit"], [type="reset"], [type="button"], [role="button"])[disabled],
+  :where(fieldset[disabled])
+    :is(button, [type="submit"], [type="button"], [type="reset"], [role="button"]) {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}

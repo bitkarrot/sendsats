@@ -1,0 +1,94 @@
+/**
+ * Custom theme
+ */
+ @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@800&display=swap");
+ :root {
+   --font-family: "Open Sans", sans-serif;
+   --border-radius: 0;
+   --form-element-spacing-vertical: 1rem;
+   --form-element-spacing-horizontal: 1.25rem;
+ }
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6 {
+   --font-family: "Raleway", sans-serif;
+   --font-weight: 800;
+ }
+ h1 {
+   --font-size: 2.5rem;
+   --typography-spacing-vertical: 2.5rem;
+ }
+ h2 {
+   --font-size: 2rem;
+   --typography-spacing-vertical: 2rem;
+ }
+ h3 {
+   --font-size: 1.75rem;
+   --typography-spacing-vertical: 1.75rem;
+ }
+ h4 {
+   --font-size: 1.5rem;
+   --typography-spacing-vertical: 1.5rem;
+ }
+ h5 {
+   --font-size: 1.25rem;
+   --typography-spacing-vertical: 1.25rem;
+ }
+
+ button,
+ input[type=submit],
+ input[type=reset],
+ input[type=button],
+ a[role=button] {
+   --font-weight: 600;
+ }
+
+
+
+/* Amber color for light color scheme (Default) */
+/* Can be forced with data-theme="light" */
+[data-theme=light],
+:root:not([data-theme=dark]) {
+  --pico-text-selection-color: rgba(183, 136, 0, 0.25);
+  --pico-primary: #876400;
+  --pico-primary-background: #ffbf00;
+  --pico-primary-underline: rgba(135, 100, 0, 0.5);
+  --pico-primary-hover: #694d00;
+  --pico-primary-hover-background: #e8ae01;
+  --pico-primary-focus: rgba(183, 136, 0, 0.25);
+  --pico-primary-inverse: #000;
+  --pico-switch-color: var(--pico-secondary-hover);
+}
+
+/* Amber color for dark color scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --pico-text-selection-color: rgba(199, 148, 0, 0.1875);
+    --pico-primary: #c79400;
+    --pico-primary-background: #ffbf00;
+    --pico-primary-underline: rgba(199, 148, 0, 0.5);
+    --pico-primary-hover: #e8ae01;
+    --pico-primary-hover-background: #fecc63;
+    --pico-primary-focus: rgba(199, 148, 0, 0.25);
+    --pico-primary-inverse: #000;
+    --pico-switch-color: var(--pico-background-color);
+  }
+}
+
+/* Amber color for dark color scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme=dark] {
+  --pico-text-selection-color: rgba(199, 148, 0, 0.1875);
+  --pico-primary: #c79400;
+  --pico-primary-background: #ffbf00;
+  --pico-primary-underline: rgba(199, 148, 0, 0.5);
+  --pico-primary-hover: #e8ae01;
+  --pico-primary-hover-background: #fecc63;
+  --pico-primary-focus: rgba(199, 148, 0, 0.25);
+  --pico-primary-inverse: #000;
+  --pico-switch-color: var(--pico-background-color);
+}

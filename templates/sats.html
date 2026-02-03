@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    div {
+        text-align: left;
+    }
+</style>
+
+<html lang="en">
+    <link rel="stylesheet" href="/static/css/pico.min.css" />
+    <link rel="stylesheet" href="/static/css/custom.css">
+<head>
+    <script async src="https://analytics.umami.is/script.js" data-website-id="ba8627bc-30b7-47fd-a4f5-be01f2002343"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <title>Sendsats.to</title>
+</head>
+<body>
+    <main class="container">
+      <!-- trunk-ignore(git-diff-check/error) -->
+      <h1><img src="static/SendSats-trans.svg" alt="Bolt" height="100" width="300"/> {{ lnaddress }}</h1>  
+      <p class="">
+          <label> Send {{ amount }} Sats </label>
+         <a href="lightning:{{bolt11}}">{{qrdata | safe}}</a> 
+        </p>
+        <p class="">
+          <a href="https://sendsats.to/{{lnaddress}}">https://sendsats.to/{{lnaddress}}</a>  
+        </p>
+  
+        <article>
+        <form method="post">
+        <label> Enter Amount: 
+          <small> 
+           [ Min: {{min_send}}, Max: {{max_send}} sats ]
+          </small>
+        </label>
+        <input type="hidden" name="lnaddress" value="{{lnaddress}}"/>
+        <input type="number" name="amount" id="number"  value="{{amount}}"/>
+        <small id="result"></small>
+        <input type="submit" id="submit" value="Fetch QR Code">
+        </form> 
+      </article>
+
+
+      <article>
+        <h2>Bolt 11</h2>
+        
+        <div>{{ bolt11 }}</div>
+      </article>
+
+     
+      <section id="accordions">
+        <h2> Lightning Address Data </h2>
+        <div> For more details on the Lightning Address 
+          specification, visit the <a href="https://lightningaddress.com/">docs.</a>
+        </div>
+        <article>
+          <details open>
+            <summary>
+              Query details
+            </summary>
+                <h3> 1. GET request to transformed URL</h3>
+                <p> {{ url }}</p>
+                <h3> 2. Callback Data from URL </h3>
+                <div>
+                  {{ callback }}
+                </div>
+                <h3> 3. Payment Query</h3>
+                <p> {{callback['callback']}}?amount={{amount}}</p>
+                <h3> 4. pr_dict returned</h3>
+                <div>
+                  {{ pr_dict }}
+                </div>
+                <h3>5. BOLT11 invoice </h3>
+                <div>
+                  {{ bolt11 }}
+                </div>
+          </details>
+          <footer>
+            <a href="/docs">Sendsats.to API Docs</a>
+          </footer>
+        </article>
+            <!-- Footer -->
+        <footer class="container">
+          <small>Built with <a href="https://picocss.com">Pico</a> • <a href="https://github.com/bitkarrot/sendsats/">Source code</a></small>
+        </footer><!-- ./ Footer -->
+      </section>
+    </main>
+
+    <!-- vue global -->
+    <script>
+      const input = document.querySelector("#number");
+      const result = document.querySelector("#result");
+      const submit = document.querySelector("#submit");
+
+      const minValue = {{ min_send }};
+      const maxValue = {{ max_send }};
+      
+      input.addEventListener("input", function() {
+        const inputValue = parseInt(input.value, 10);
+        if (inputValue >= minValue && inputValue <= maxValue) {
+          result.innerHTML = "";
+          submit.removeAttribute("disabled");
+        } else {
+          result.innerHTML = "Amount entered is out of range";
+          submit.setAttribute("disabled", true);
+        }
+      });
+    </script>      
+
+    <!-- Minimal theme switcher -->
+    <!-- <script src="/static/js/minimal-theme-switcher.js"></script> -->
+
+    <!-- Modal -->
+    <!-- <script src="/static/js/modal.js"></script> -->
+
+</body>
+</html>

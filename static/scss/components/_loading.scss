@@ -1,0 +1,44 @@
+@use "sass:map";
+@use "../settings" as *;
+
+@if map.get($modules, "components/loading") {
+  /**
+   * Loading ([aria-busy=true])
+   */
+
+  // Everything except form elements
+  [aria-busy="true"]:not(input, select, textarea, html) {
+    &::before {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      background-image: var(#{$✨}icon-loading);
+      background-size: 1rem auto;
+      background-repeat: no-repeat;
+      content: "";
+      vertical-align: -0.125em; // Visual alignment
+    }
+
+    &:not(:empty) {
+      &::before {
+        margin-inline-end: calc(var(#{$✨}spacing) * 0.5);
+      }
+    }
+
+    &:empty {
+      text-align: center;
+    }
+  }
+
+  // Buttons and links
+  button,
+  [type="submit"],
+  [type="button"],
+  [type="reset"],
+  [role="button"],
+  a {
+    &[aria-busy="true"] {
+      pointer-events: none;
+    }
+  }
+}

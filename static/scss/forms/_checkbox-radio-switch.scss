@@ -1,0 +1,174 @@
+@use "sass:map";
+@use "../settings" as *;
+
+@if map.get($modules, "forms/checkbox-radio-switch") {
+  /**
+   * Checkboxes, Radios and Switches
+   */
+
+  // Labels
+  // Not working in Firefox, which doesn't support the `:has()` pseudo-class
+  label {
+    &:has([type="checkbox"], [type="radio"]) {
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+
+  [type="checkbox"],
+  [type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: -0.125em;
+    margin-inline-end: 0.5em;
+    border-width: var(#{$✨}border-width);
+    vertical-align: middle;
+    cursor: pointer;
+
+    &::-ms-check {
+      display: none; // unstyle IE checkboxes
+    }
+
+    &:checked,
+    &:checked:active,
+    &:checked:focus {
+      #{$✨}background-color: var(#{$✨}primary-background);
+      #{$✨}border-color: var(#{$✨}primary-border);
+      background-image: var(#{$✨}icon-checkbox);
+      background-position: center;
+      background-size: 0.75em auto;
+      background-repeat: no-repeat;
+    }
+
+    & ~ label {
+      display: inline-block;
+      margin-bottom: 0;
+      cursor: pointer;
+
+      &:not(:last-of-type) {
+        margin-inline-end: 1em;
+      }
+    }
+  }
+
+  // Checkboxes
+  [type="checkbox"] {
+    &:indeterminate {
+      #{$✨}background-color: var(#{$✨}primary-background);
+      #{$✨}border-color: var(#{$✨}primary-border);
+      background-image: var(#{$✨}icon-minus);
+      background-position: center;
+      background-size: 0.75em auto;
+      background-repeat: no-repeat;
+    }
+  }
+
+  // Radios
+  [type="radio"] {
+    border-radius: 50%;
+
+    &:checked,
+    &:checked:active,
+    &:checked:focus {
+      #{$✨}background-color: var(#{$✨}primary-inverse);
+      border-width: 0.35em;
+      background-image: none;
+    }
+  }
+
+  // Switchs
+  [type="checkbox"][role="switch"] {
+    #{$✨}background-color: var(#{$✨}switch-background-color);
+    #{$✨}color: var(#{$✨}switch-color);
+
+    // Config
+    $switch-height: 1.25em;
+    $switch-width: 2.25em;
+    $switch-transition: 0.1s ease-in-out;
+
+    // Styles
+    width: $switch-width;
+    height: $switch-height;
+    border: var(#{$✨}border-width) solid var(#{$✨}border-color);
+    border-radius: $switch-height;
+    background-color: var(#{$✨}background-color);
+    line-height: $switch-height;
+
+    &:not([aria-invalid]) {
+      #{$✨}border-color: var(#{$✨}switch-background-color);
+    }
+
+    &:before {
+      display: block;
+      width: calc(#{$switch-height} - (var(#{$✨}border-width) * 2));
+      height: 100%;
+      border-radius: 50%;
+      background-color: var(#{$✨}color);
+      content: "";
+
+      @if $enable-transitions {
+        transition: margin $switch-transition;
+      }
+    }
+
+    &:focus {
+      #{$✨}background-color: var(#{$✨}switch-background-color);
+      #{$✨}border-color: var(#{$✨}switch-background-color);
+    }
+
+    &:checked {
+      #{$✨}background-color: var(#{$✨}switch-checked-background-color);
+      #{$✨}border-color: var(#{$✨}switch-checked-background-color);
+      background-image: none;
+
+      &::before {
+        margin-inline-start: calc(#{$switch-width * 0.5} - var(#{$✨}border-width));
+      }
+    }
+
+    &[disabled] {
+      #{$✨}background-color: var(#{$✨}border-color);
+    }
+  }
+
+  // Aria-invalid
+  [type="checkbox"],
+  [type="checkbox"][role="switch"] {
+    &[aria-invalid="false"] {
+      &:checked,
+      &:checked:active,
+      &:checked:focus {
+        #{$✨}background-color: var(#{$✨}form-element-valid-border-color);
+      }
+    }
+    &:checked,
+    &:checked:active,
+    &:checked:focus {
+      &[aria-invalid="true"] {
+        #{$✨}background-color: var(#{$✨}form-element-invalid-border-color);
+      }
+    }
+  }
+
+  [type="checkbox"],
+  [type="radio"],
+  [type="checkbox"][role="switch"] {
+    &[aria-invalid="false"] {
+      &:checked,
+      &:checked:active,
+      &:checked:focus {
+        #{$✨}border-color: var(#{$✨}form-element-valid-border-color);
+      }
+    }
+    &:checked,
+    &:checked:active,
+    &:checked:focus {
+      &[aria-invalid="true"] {
+        #{$✨}border-color: var(#{$✨}form-element-invalid-border-color);
+      }
+    }
+  }
+}

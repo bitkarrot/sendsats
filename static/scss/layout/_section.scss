@@ -1,0 +1,12 @@
+@use "sass:map";
+@use "../settings" as *;
+
+@if map.get($modules, "layout/section") {
+  /**
+   * Section
+   */
+
+  section {
+    margin-bottom: var(#{$✨}block-spacing-vertical);
+  }
+}

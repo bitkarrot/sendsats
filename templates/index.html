@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    div {
+        text-align: left;
+    }
+</style>
+
+<html lang="en">
+    <link rel="stylesheet" href="/static/css/pico.min.css" />
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <head>
+        <script async src="https://analytics.eu.umami.is/script.js" data-website-id="a1a5c041-cf11-48c0-bdea-39ccd6358f1b"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <title>Sendsats.to</title>
+</head>
+<body>
+    <main class="container">
+      <h1><img src="static/SendSats-trans.svg" alt="Bolt" height="100" width="400"/></h1>
+      <article>
+        <form method="post">
+            <label> Your Lightning Address</label>
+            <input type="email" name="lnaddress" onclick="clearInput()" id="address" value="bitkarrot@nostr.com" />
+            <label> Amount in Sats:</label>
+            <input type="number" name="amount" value="{{amount}}"/>
+            <input type="submit" value="Fetch QR Code">
+        </form> 
+        <p> {{ result }}</p>
+      </article>
+    </main>
+    <article>
+        <a href="/docs">Sendsats.to API Docs</a>
+    </article>
+        <!-- Footer -->
+    <footer class="container">
+      <small>Built with <a href="https://picocss.com">Pico</a> • <a href="https://github.com/bitkarrot/sendsats/">Source code</a></small>
+    </footer><!-- ./ Footer -->
+
+    <!-- vue global -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Minimal theme switcher -->
+    <!-- <script src="/static/js/minimal-theme-switcher.js"></script> -->
+    <!-- Modal -->
+    <!-- <script src="/static/js/modal.js"></script> -->
+
+    <script>
+        function clearInput() {
+        document.getElementById("address").value = "";
+        }
+    </script>
+
+</body>
+</html>

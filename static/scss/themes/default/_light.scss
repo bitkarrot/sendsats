@@ -1,0 +1,209 @@
+@use "sass:map";
+@use "../../colors" as *;
+@use "../../settings" as *;
+@use "../../utils/box-shadow";
+@use "../../utils/functions";
+
+// Default: Light theme
+@mixin theme {
+  #{$✨}background-color: #{$white};
+
+  // Text color
+  #{$✨}color: #{$zinc-750};
+
+  // Text selection color
+  #{$✨}text-selection-color: #{rgba($azure-400, 0.25)};
+
+  // Muted colors
+  #{$✨}muted-color: #{$zinc-550};
+  #{$✨}muted-border-color: #{mix($slate-100, $slate-50)};
+
+  // Primary colors
+  #{$✨}primary: #{$azure-550};
+  #{$✨}primary-background: #{$azure-550};
+  #{$✨}primary-border: var(#{$✨}primary-background);
+  #{$✨}primary-underline: #{rgba($azure-550, 0.5)};
+  #{$✨}primary-hover: #{$azure-650};
+  #{$✨}primary-hover-background: #{$azure-600};
+  #{$✨}primary-hover-border: var(#{$✨}primary-hover-background);
+  #{$✨}primary-hover-underline: var(#{$✨}primary-hover);
+  #{$✨}primary-focus: #{rgba($azure-400, 0.5)};
+  #{$✨}primary-inverse: #{$white};
+
+  // Secondary colors
+  #{$✨}secondary: #{$slate-550};
+  #{$✨}secondary-background: #{$slate-600};
+  #{$✨}secondary-border: var(#{$✨}secondary-background);
+  #{$✨}secondary-underline: #{rgba($slate-550, 0.5)};
+  #{$✨}secondary-hover: #{$slate-650};
+  #{$✨}secondary-hover-background: #{$slate-650};
+  #{$✨}secondary-hover-border: var(#{$✨}secondary-hover-background);
+  #{$✨}secondary-hover-underline: var(#{$✨}secondary-hover);
+  #{$✨}secondary-focus: #{rgba($slate-550, 0.25)};
+  #{$✨}secondary-inverse: #{$white};
+
+  // Contrast colors
+  #{$✨}contrast: #{$slate-900};
+  #{$✨}contrast-background: #{$slate-900};
+  #{$✨}contrast-border: var(#{$✨}contrast-background);
+  #{$✨}contrast-underline: #{rgba($slate-900, 0.5)};
+  #{$✨}contrast-hover: #{$black};
+  #{$✨}contrast-hover-background: #{$black};
+  #{$✨}contrast-hover-border: var(#{$✨}contrast-hover-background);
+  #{$✨}contrast-hover-underline: var(#{$✨}secondary-hover);
+  #{$✨}contrast-focus: #{rgba($slate-550, 0.25)};
+  #{$✨}contrast-inverse: #{$white};
+
+  // Box shadow
+  #{$✨}box-shadow: box-shadow.shadow($slate-500);
+
+  // Typography
+  @if map.get($modules, "content/typography") {
+    // Headings colors
+    #{$✨}h1-color: #{$zinc-800};
+    #{$✨}h2-color: #{$zinc-750};
+    #{$✨}h3-color: #{$zinc-700};
+    #{$✨}h4-color: #{$zinc-650};
+    #{$✨}h5-color: #{$zinc-600};
+    #{$✨}h6-color: #{$zinc-550};
+
+    // Highlighted text (<mark>)
+    #{$✨}mark-background-color: #{mix($amber-100, $amber-50)};
+    #{$✨}mark-color: #{$zinc-950};
+
+    // Inserted (<ins>) & Deleted (<del>)
+    #{$✨}ins-color: #{mix($jade-450, $zinc-750)};
+    #{$✨}del-color: #{mix($red-500, $zinc-750)};
+
+    // Blockquote
+    #{$✨}blockquote-border-color: var(#{$✨}muted-border-color);
+    #{$✨}blockquote-footer-color: var(#{$✨}muted-color);
+  }
+
+  // Button
+  @if map.get($modules, "content/button") {
+    // To disable box-shadow, remove the var or set to '0 0 0 rgba(0, 0, 0, 0)'
+    // Don't use, 'none, 'false, 'null', '0', etc.
+    #{$✨}button-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    #{$✨}button-hover-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+
+  // Table
+  @if map.get($modules, "content/table") {
+    #{$✨}table-border-color: var(#{$✨}muted-border-color);
+    #{$✨}table-row-stripped-background-color: #{rgba($zinc-500, 0.0375)};
+  }
+
+  // Code
+  @if map.get($modules, "content/code") {
+    #{$✨}code-background-color: #{mix($slate-50, $white, 75%)};
+    #{$✨}code-color: #{$zinc-550};
+    #{$✨}code-kbd-background-color: var(#{$✨}color);
+    #{$✨}code-kbd-color: var(#{$✨}background-color);
+  }
+
+  // Form elements
+  @if map.get($modules, "forms/basics") {
+    #{$✨}form-element-background-color: #{mix($slate-50, $white, 25%)};
+    #{$✨}form-element-selected-background-color: #{$slate-100};
+    #{$✨}form-element-border-color: #{$slate-150};
+    #{$✨}form-element-color: #{$zinc-850};
+    #{$✨}form-element-placeholder-color: var(#{$✨}muted-color);
+    #{$✨}form-element-active-background-color: #{$white};
+    #{$✨}form-element-active-border-color: var(#{$✨}primary-border);
+    #{$✨}form-element-focus-color: var(#{$✨}primary-border);
+    #{$✨}form-element-disabled-background-color: var(#{$✨}form-element-background-color);
+    #{$✨}form-element-disabled-border-color: var(#{$✨}form-element-border-color);
+    #{$✨}form-element-disabled-opacity: 0.5;
+    #{$✨}form-element-invalid-border-color: #{mix($red-500, $zinc-350)};
+    #{$✨}form-element-invalid-active-border-color: #{mix($red-500, $zinc-350, 75%)};
+    #{$✨}form-element-invalid-focus-color: var(#{$✨}form-element-invalid-active-border-color);
+    #{$✨}form-element-valid-border-color: #{mix($jade-450, $zinc-350)};
+    #{$✨}form-element-valid-active-border-color: #{mix($jade-450, $zinc-350, 75%)};
+    #{$✨}form-element-valid-focus-color: var(#{$✨}form-element-valid-active-border-color);
+
+    // Focus for buttons, radio and select
+    input:is(
+        [type="submit"],
+        [type="button"],
+        [type="reset"],
+        [type="checkbox"],
+        [type="radio"],
+        [type="file"]
+      ) {
+      #{$✨}form-element-focus-color: var(#{$✨}primary-focus);
+    }
+  }
+
+  // Switch (input[type="checkbox"][role="switch"])
+  @if map.get($modules, "forms/checkbox-radio-switch") {
+    #{$✨}switch-background-color: #{$slate-200};
+    #{$✨}switch-color: var(#{$✨}primary-inverse);
+    #{$✨}switch-checked-background-color: var(#{$✨}primary-background);
+  }
+
+  // Range (input[type="range"])
+  @if map.get($modules, "forms/input-range") {
+    #{$✨}range-border-color: #{$slate-100};
+    #{$✨}range-active-border-color: #{$slate-200};
+    #{$✨}range-thumb-border-color: var(#{$✨}background-color);
+    #{$✨}range-thumb-color: var(#{$✨}secondary-background);
+    #{$✨}range-thumb-active-color: var(#{$✨}primary-background);
+  }
+
+  // Accordion (<details>)
+  @if map.get($modules, "components/accordion") {
+    #{$✨}accordion-border-color: var(#{$✨}muted-border-color);
+    #{$✨}accordion-active-summary-color: var(#{$✨}primary-hover);
+    #{$✨}accordion-close-summary-color: var(#{$✨}color);
+    #{$✨}accordion-open-summary-color: var(#{$✨}muted-color);
+  }
+
+  // Card (<article>)
+  @if map.get($modules, "components/card") {
+    #{$✨}card-background-color: var(#{$✨}background-color);
+    #{$✨}card-border-color: var(#{$✨}muted-border-color);
+    #{$✨}card-box-shadow: var(#{$✨}box-shadow);
+    #{$✨}card-sectioning-background-color: #{mix($slate-50, $white, 25%)};
+  }
+
+  // Dropdown (details.dropdown)
+  @if map.get($modules, "components/dropdown") and $enable-classes {
+    #{$✨}dropdown-background-color: #{$white};
+    #{$✨}dropdown-border-color: #{$slate-50};
+    #{$✨}dropdown-box-shadow: var(#{$✨}box-shadow);
+    #{$✨}dropdown-color: var(#{$✨}color);
+    #{$✨}dropdown-hover-background-color: #{$slate-50};
+  }
+
+  // Loading ([aria-busy=true])
+  @if map.get($modules, "components/loading") {
+    #{$✨}loading-spinner-opacity: 0.5;
+  }
+
+  // Modal (<dialog>)
+  @if map.get($modules, "components/modal") {
+    #{$✨}modal-overlay-background-color: #{rgba(mix($zinc-100, $zinc-50), 0.75)};
+  }
+
+  // Progress
+  @if map.get($modules, "components/progress") {
+    #{$✨}progress-background-color: #{$slate-100};
+    #{$✨}progress-color: var(#{$✨}primary-background);
+  }
+
+  // Tooltip ([data-tooltip])
+  @if map.get($modules, "components/tooltip") {
+    #{$✨}tooltip-background-color: var(#{$✨}contrast-background);
+    #{$✨}tooltip-color: var(#{$✨}contrast-inverse);
+  }
+
+  // Form validation icons
+  @if map.get($modules, "forms/basics") {
+    #{$✨}icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{functions.display-rgb(mix($jade-450, $zinc-750))}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    #{$✨}icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{functions.display-rgb(mix($red-500, $zinc-750))}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+  }
+
+  // Document
+  color-scheme: light;
+}
